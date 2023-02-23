@@ -1,12 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyA : MonoBehaviour
+public class EnemyA : Base
 {
-    public float speed;
-    public float shootSpeed;
-    public float shootDelay;
-
     public float pontoInicialCurva;
     public float pontoInicialCurvaX;
 
@@ -21,12 +17,11 @@ public class EnemyA : MonoBehaviour
 
     public bool isLateral;
 
-    public GameObject bulletPrefab;
-    public Transform gunPos;
-
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        base.Start();
+
         rotacaoZ = transform.eulerAngles.z;
 
         if (isLateral)
@@ -50,8 +45,8 @@ public class EnemyA : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject temp = Instantiate(bulletPrefab, gunPos.position, transform.localRotation);
-        temp.GetComponent<Rigidbody2D>().velocity = -transform.up  * shootSpeed;
+        BaseShoot();
+        temp.GetComponent<Rigidbody2D>().velocity = -transform.up * shootSpeed;
     }
 
     private IEnumerator ShootDelay()
@@ -72,10 +67,10 @@ public class EnemyA : MonoBehaviour
             CurvaY();
         }
 
-        if(transform.position.y > 2)
+        if (transform.position.y > 2)
         {
             transform.rotation = Quaternion.Euler(0, 0, 270);
-            
+
         }
     }
 
@@ -139,5 +134,6 @@ public class EnemyA : MonoBehaviour
     private void OnBecameVisible()
     {
         StartCoroutine(ShootDelay());
+        
     }
 }

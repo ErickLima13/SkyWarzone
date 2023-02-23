@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Base
 {
     private Rigidbody2D playerRb;
 
     private Vector2 movementInputs;
 
-    [Range(0, 50)] public float speed;
-    [Range(0, 50)] public float shootSpeed;
-
-    public Transform gunPos;
-
     public GameObject bulletPrefab;
+
+    [Header("Settings limit")]
+    public Transform limitUp;
+    public Transform limitDown;
+    public Transform limitLeft;
+    public Transform limitRight;
 
     private void Initialization()
     {
@@ -21,8 +22,9 @@ public class PlayerController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        base.Start();
         Initialization();
     }
 
@@ -43,12 +45,37 @@ public class PlayerController : MonoBehaviour
         movementInputs.y = Input.GetAxis("Vertical");
 
         playerRb.velocity = movementInputs * speed;
+
+        MovementLimits();
+    }
+
+    private void MovementLimits()
+    {
+        float posY = transform.position.y;
+        float posX = transform.position.x;
+
+        if (posY > limitUp.position.y)
+        {
+            transform.position = new Vector3(posX, limitUp.transform.position.y, 0);
+        }
+        else if (posY < limitDown.position.y)
+        {
+            transform.position = new Vector3(posX, limitDown.transform.position.y, 0);
+        }
+
+        if (posX > limitRight.position.x)
+        {
+            transform.position = new Vector3(limitRight.position.x, posY, 0);
+        }
+        else if (posX < limitLeft.position.x)
+        {
+            transform.position = new Vector3(limitLeft.position.x, posY, 0);
+        }
     }
 
     private void Shoot()
     {
-        GameObject temp = Instantiate(bulletPrefab);
-        temp.transform.position = gunPos.position;
+        BaseShoot();
         temp.GetComponent<Rigidbody2D>().velocity = new(0, shootSpeed);
     }
 }

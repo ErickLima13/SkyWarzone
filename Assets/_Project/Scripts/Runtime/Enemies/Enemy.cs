@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Base
 {
     public PlayerController playerController;
-
-    public GameObject bulletPrefab;
-    public Transform gunPos;
 
     public GameObject explosionPrefab;
     public GameObject[] loots;
@@ -15,9 +12,10 @@ public class Enemy : MonoBehaviour
     public float[] delay;
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        playerController = FindObjectOfType<PlayerController>();
+        base.Start();
+        playerController = gameManager.playerController;
         StartCoroutine(ShootDelay());
     }
 
@@ -30,7 +28,7 @@ public class Enemy : MonoBehaviour
     private void Shoot()
     {
         gunPos.right = playerController.transform.position - transform.position;
-        GameObject temp = Instantiate(bulletPrefab, gunPos.position, gunPos.rotation);
+        BaseShoot();
         temp.GetComponent<Rigidbody2D>().velocity = gunPos.right * 3;
     }
 
