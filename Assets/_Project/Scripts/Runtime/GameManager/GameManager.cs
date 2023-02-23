@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
     [Header("Settings Cam")]
     public Transform limitCamLeft;
     public Transform limitCamRight;
+    public Transform limitCamUp;
     public float speedCam;
+    public float speedPhase;
 
     private void Initialization()
     {
@@ -40,6 +42,7 @@ public class GameManager : MonoBehaviour
     private void LateUpdate()
     {
         ControlCam();
+        
     }
 
     private void ControlCam()
@@ -62,6 +65,12 @@ public class GameManager : MonoBehaviour
     {
         Vector3 targetCam = new(playerController.transform.position.x, cam.transform.position.y, cam.transform.position.z);
         cam.transform.position = Vector3.Lerp(cam.transform.position, targetCam, speedCam * Time.deltaTime);
+    }
+
+    private void MoveCamUp()
+    {
+        Vector3 targetCam = new(cam.transform.position.x,limitCamUp.position.y,cam.transform.position.z);
+        cam.transform.position = Vector3.MoveTowards(cam.transform.position,targetCam,speedPhase* Time.deltaTime);
     }
 
     private void PlayerMovementLimits()
