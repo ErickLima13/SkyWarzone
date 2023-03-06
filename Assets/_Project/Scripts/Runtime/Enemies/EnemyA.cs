@@ -22,17 +22,13 @@ public class EnemyA : Base
     {
         base.Start();
 
-        rotacaoZ = transform.eulerAngles.z;
-
-        if (isLateral)
+        if (!isLateral)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 90);
-            grausCurva = 180;
+            rotacaoZ = transform.eulerAngles.z;   
         }
         else
         {
-            rotacaoZ = transform.eulerAngles.z;
-            grausCurva = 50;
+            transform.rotation = Quaternion.Euler(0, 0, 90);
         }
     }
 
@@ -66,17 +62,11 @@ public class EnemyA : Base
         {
             CurvaY();
         }
-
-        if (transform.position.y > 2)
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 270);
-
-        }
     }
 
     private void CurvaY()
     {
-        grausCurva = 50;
+        grausCurva = 90;
 
         if (transform.position.y <= pontoInicialCurva && !isCurva)
         {

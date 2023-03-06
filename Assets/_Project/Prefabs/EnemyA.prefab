@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 3f54b97fb9a97104c9545ffac80ae9f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,17 +99,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df0e71511efd5a4a80c4dbfe026958a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  TagBullet: 1
+  idBullet: 0
+  speed: 0
   shootSpeed: 5
   shootDelay: 2
+  gunPos: {fileID: 6364369075946408944}
+  gameManager: {fileID: 0}
+  temp: {fileID: 0}
+  explosionPrefab: {fileID: 1587526109998519124, guid: f1afba0cabfa8ed44be9166b3d72142d, type: 3}
   pontoInicialCurva: 1
   pontoInicialCurvaX: 3
   isCurva: 0
   grausCurva: 50
   incrementar: 0.5
-  isLateral: 1
-  bulletPrefab: {fileID: 4225735256080305599, guid: bfa1ee6208e80b040a5c9fc777eb8664, type: 3}
-  gunPos: {fileID: 6364369075946408944}
+  isLateral: 0
 --- !u!61 &6364369075057285754
 BoxCollider2D:
   m_ObjectHideFlags: 0

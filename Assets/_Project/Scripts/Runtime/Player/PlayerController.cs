@@ -10,15 +10,13 @@ public class PlayerController : Base
 
     public GameObject bulletPrefab;
 
-    [Header("Settings limit")]
-    public Transform limitUp;
-    public Transform limitDown;
-    public Transform limitLeft;
-    public Transform limitRight;
+   
 
     private void Initialization()
     {
         playerRb = GetComponent<Rigidbody2D>();
+        gameManager.playerController = this;
+        gameManager.isAlive = true;
     }
 
     // Start is called before the first frame update
@@ -41,35 +39,12 @@ public class PlayerController : Base
 
     private void Movement()
     {
-        movementInputs.x = Input.GetAxis("Horizontal");
-        movementInputs.y = Input.GetAxis("Vertical");
 
-        playerRb.velocity = movementInputs * speed;
-
-        MovementLimits();
-    }
-
-    private void MovementLimits()
-    {
-        float posY = transform.position.y;
-        float posX = transform.position.x;
-
-        if (posY > limitUp.position.y)
+        if (gameManager.isAlive)
         {
-            transform.position = new Vector3(posX, limitUp.transform.position.y, 0);
-        }
-        else if (posY < limitDown.position.y)
-        {
-            transform.position = new Vector3(posX, limitDown.transform.position.y, 0);
-        }
-
-        if (posX > limitRight.position.x)
-        {
-            transform.position = new Vector3(limitRight.position.x, posY, 0);
-        }
-        else if (posX < limitLeft.position.x)
-        {
-            transform.position = new Vector3(limitLeft.position.x, posY, 0);
+            movementInputs.x = Input.GetAxis("Horizontal");
+            movementInputs.y = Input.GetAxis("Vertical");
+            playerRb.velocity = movementInputs * speed;
         }
     }
 
