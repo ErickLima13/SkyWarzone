@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnemyA : Base
 {
+    [Header("Enemy A")]
     public float pontoInicialCurva;
     public float pontoInicialCurvaX;
 
@@ -16,6 +17,7 @@ public class EnemyA : Base
     public float incrementar;
 
     public bool isLateral;
+
 
     // Start is called before the first frame update
     public override void Start()
@@ -42,12 +44,12 @@ public class EnemyA : Base
     private void Shoot()
     {
         BaseShoot();
-        temp.GetComponent<Rigidbody2D>().velocity = -transform.up * shootSpeed;
+        shoot.GetComponent<Rigidbody2D>().velocity = -transform.up * shootSpeed;
     }
 
     private IEnumerator ShootDelay()
     {
-        yield return new WaitForSeconds(shootDelay);
+        yield return new WaitForSeconds(Random.Range(delay[0], delay[1]));
         Shoot();
         StartCoroutine(ShootDelay());
     }
@@ -124,6 +126,5 @@ public class EnemyA : Base
     private void OnBecameVisible()
     {
         StartCoroutine(ShootDelay());
-        
     }
 }

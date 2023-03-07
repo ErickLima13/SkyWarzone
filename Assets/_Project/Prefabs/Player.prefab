@@ -257,16 +257,10 @@ MonoBehaviour:
   idBullet: 1
   speed: 4
   shootSpeed: 5
-  shootDelay: 0
   gunPos: {fileID: 1237192434152216514}
   gameManager: {fileID: 0}
   temp: {fileID: 0}
-  bulletPrefab: {fileID: 3533160280514228042, guid: 5dd55bd0fa20ab843a81dc73a03b75a9, type: 3}
-  isAlive: 0
-  limitUp: {fileID: 0}
-  limitDown: {fileID: 0}
-  limitLeft: {fileID: 0}
-  limitRight: {fileID: 0}
+  invincibleColor: {r: 1, g: 1, b: 1, a: 0.6}
 --- !u!1 &1237192434152216517
 GameObject:
   m_ObjectHideFlags: 0

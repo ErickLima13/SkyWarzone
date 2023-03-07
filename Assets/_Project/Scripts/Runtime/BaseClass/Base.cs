@@ -5,18 +5,21 @@ using Random = UnityEngine.Random;
 
 public class Base : MonoBehaviour
 {
+    [Header("Base")]
     public TagBullets TagBullet;
     public int idBullet;
 
     [Range(0, 50)] public float speed;
     [Range(0, 50)] public float shootSpeed;
-    [Range(0, 50)] public float shootDelay;
+    public float[] delay;
 
     public Transform gunPos;
 
     public GameManager gameManager;
 
-    public GameObject temp;
+    public GameObject shoot;
+
+
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -26,8 +29,8 @@ public class Base : MonoBehaviour
 
     public void BaseShoot()
     {
-        temp = Instantiate(gameManager.bulletsPrefabs[idBullet], gunPos.position, gameManager.bulletsPrefabs[idBullet].transform.rotation);
-        temp.tag = TagBullet.ToString();
+        shoot = Instantiate(gameManager.bulletsPrefabs[idBullet], gunPos.position, gunPos.localRotation);
+        shoot.tag = TagBullet.ToString();
     }
 
     private void SpawnLoots()
@@ -59,12 +62,14 @@ public class Base : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         float timer = 0.6f;
+    
 
         switch (collision.gameObject.tag)
         {
             case "PlayerShoot":
                 Destroy(collision.gameObject);
                 GameObject temp = Instantiate(gameManager.explosionPrefab, transform.position, gameManager.explosionPrefab.transform.localRotation);
+                temp.transform.parent = gameManager.phase;
                 Destroy(temp, timer);
                 SpawnLoots();
                 Destroy(gameObject);
@@ -74,10 +79,11 @@ public class Base : MonoBehaviour
                 {
                     return;
                 }
+
                 Destroy(collision.gameObject);
                 GameObject explosion = Instantiate(gameManager.explosionPrefab, transform.position, gameManager.explosionPrefab.transform.localRotation);
+                explosion.transform.parent = gameManager.phase;
                 Destroy(explosion, timer);
-                //Destroy(gameObject);
                 gameManager.PlayerHit();
                 break;
         }

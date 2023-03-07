@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Base
+public class Tank : Base
 {
-    //[Header("Enemy")]
-    
+    //[Header("Tank")]
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-        StartCoroutine(ShootDelay());
+        
     }
 
     // Update is called once per frame
@@ -19,14 +18,23 @@ public class Enemy : Base
     {
         
     }
+    private void OnBecameVisible()
+    {
+        StartCoroutine(ShootDelay());
+    }
+
+    private void OnBecameInvisible()
+    {
+        StopAllCoroutines();
+    }
 
     private void Shoot()
     {
         if (gameManager.isAlive)
         {
-            gunPos.right = gameManager.playerController.transform.position - transform.position;
+            gunPos.up = gameManager.playerController.transform.position - transform.position;
             BaseShoot();
-            shoot.GetComponent<Rigidbody2D>().velocity = gunPos.right * shootSpeed;
+            shoot.GetComponent<Rigidbody2D>().velocity = gunPos.up * shootSpeed;
         }
     }
 

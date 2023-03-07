@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [Header("Settings Player")]
     public PlayerController playerController;
     public int lifes;
+    public float invincibleTime;
     public bool isAlive;
     public Transform spawnPlayer;
     public Transform limitUp;
@@ -26,6 +27,9 @@ public class GameManager : MonoBehaviour
     public GameObject[] loots;
     public GameObject explosionPrefab;
     public GameObject playerPrefab;
+
+    public Transform phase;
+    [Range(0,10)] public float speedPhase;
 
     private void Initialization()
     {
@@ -45,6 +49,17 @@ public class GameManager : MonoBehaviour
         {
             MovementLimits();
         }
+    }
+
+    private void LateUpdate()
+    {
+        MovePhase();
+    }
+
+    private void MovePhase()
+    {
+        Vector3 target = new(phase.position.x, -33, phase.position.z);
+        phase.position = Vector3.MoveTowards(phase.position, target, speedPhase * Time.deltaTime);
     }
 
 
@@ -80,11 +95,20 @@ public class GameManager : MonoBehaviour
 
         if(lifes >= 0)
         {
-            Instantiate(playerPrefab,spawnPlayer.position, Quaternion.identity);
+            StartCoroutine(InstantiatePLayer());
         }
         else
         {
             print("Game Over");
         }
+    }
+
+    private IEnumerator InstantiatePLayer()
+    {
+        yield return new WaitForSeconds(2);
+        Instantiate(playerPrefab, spawnPlayer.position, Quaternion.identity);
+
+        yield return new WaitForEndOfFrame();
+        playerController.StartCoroutine(playerController.Invincible());
     }
 }

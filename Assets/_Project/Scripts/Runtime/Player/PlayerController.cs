@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class PlayerController : Base
 {
+    [Header("Player")]
     private Rigidbody2D playerRb;
 
     private Vector2 movementInputs;
 
-    public GameObject bulletPrefab;
+    private SpriteRenderer playerSr;
 
-   
+    public Color invincibleColor;
 
     private void Initialization()
     {
         playerRb = GetComponent<Rigidbody2D>();
+        playerSr = GetComponent<SpriteRenderer>();
         gameManager.playerController = this;
         gameManager.isAlive = true;
     }
@@ -51,6 +53,27 @@ public class PlayerController : Base
     private void Shoot()
     {
         BaseShoot();
-        temp.GetComponent<Rigidbody2D>().velocity = new(0, shootSpeed);
+        shoot.GetComponent<Rigidbody2D>().velocity = new(0, shootSpeed);
+    }
+
+    public IEnumerator Invincible()
+    {
+        Collider2D collider2D = GetComponent<Collider2D>();
+        collider2D.enabled = false;
+        playerSr.color = invincibleColor;
+        StartCoroutine(Blink());
+
+        yield return new WaitForSeconds(gameManager.invincibleTime);
+        collider2D.enabled = true;
+        playerSr.color = Color.white;
+        playerSr.enabled = true;
+        StopAllCoroutines();
+    }
+
+    private IEnumerator Blink()
+    {
+        yield return new WaitForSeconds(0.3f);
+        playerSr.enabled = !playerSr.enabled;
+        StartCoroutine(Blink());    
     }
 }
