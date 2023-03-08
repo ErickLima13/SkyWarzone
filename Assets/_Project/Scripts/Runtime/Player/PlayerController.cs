@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : Base
@@ -12,6 +11,8 @@ public class PlayerController : Base
     private SpriteRenderer playerSr;
 
     public Color invincibleColor;
+
+    public SpriteRenderer planeGas;
 
     private void Initialization()
     {
@@ -31,23 +32,22 @@ public class PlayerController : Base
     // Update is called once per frame
     void Update()
     {
-        Movement();
-
-        if (Input.GetButtonDown("Fire1"))
+        if (gameManager.isAlive && gameManager.currentState == GameStates.GamePlay)
         {
-            Shoot();
+            Movement();
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Shoot();
+            }
         }
     }
 
     private void Movement()
     {
-
-        if (gameManager.isAlive)
-        {
-            movementInputs.x = Input.GetAxis("Horizontal");
-            movementInputs.y = Input.GetAxis("Vertical");
-            playerRb.velocity = movementInputs * speed;
-        }
+        movementInputs.x = Input.GetAxis("Horizontal");
+        movementInputs.y = Input.GetAxis("Vertical");
+        playerRb.velocity = movementInputs * speed;
     }
 
     private void Shoot()
@@ -74,6 +74,6 @@ public class PlayerController : Base
     {
         yield return new WaitForSeconds(0.3f);
         playerSr.enabled = !playerSr.enabled;
-        StartCoroutine(Blink());    
+        StartCoroutine(Blink());
     }
 }

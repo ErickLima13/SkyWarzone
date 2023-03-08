@@ -8,6 +8,7 @@ public class Base : MonoBehaviour
     [Header("Base")]
     public TagBullets TagBullet;
     public int idBullet;
+    public int points;
 
     [Range(0, 50)] public float speed;
     [Range(0, 50)] public float shootSpeed;
@@ -18,7 +19,6 @@ public class Base : MonoBehaviour
     public GameManager gameManager;
 
     public GameObject shoot;
-
 
 
     // Start is called before the first frame update
@@ -72,6 +72,7 @@ public class Base : MonoBehaviour
                 temp.transform.parent = gameManager.phase;
                 Destroy(temp, timer);
                 SpawnLoots();
+                gameManager.AddScore(points);
                 Destroy(gameObject);
                 break;
             case "EnemyShoot":

@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 4bd1c681b26a55e4bb5f598a8b89b53e, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -257,10 +257,12 @@ MonoBehaviour:
   idBullet: 1
   speed: 4
   shootSpeed: 5
+  delay: []
   gunPos: {fileID: 1237192434152216514}
   gameManager: {fileID: 0}
-  temp: {fileID: 0}
+  shoot: {fileID: 0}
   invincibleColor: {r: 1, g: 1, b: 1, a: 0.6}
+  planeGas: {fileID: 1237192433741862588}
 --- !u!1 &1237192434152216517
 GameObject:
   m_ObjectHideFlags: 0
